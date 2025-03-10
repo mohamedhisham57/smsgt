@@ -1,26 +1,19 @@
-ARG BUILD_FROM
-FROM $BUILD_FROM
-ENV LANG C.UTF-8
-# Copy data for add-on
-COPY run.sh /
-RUN chmod a+x /run.sh
+FROM node:18-alpine
 
-CMD [ "/run.sh" ]
+# Set working directory
+WORKDIR /app
 
-FROM python:3.9
+# Copy package files
+COPY package.json package-lock.json* ./
 
+# Install dependencies
+RUN npm ci --only=production
 
+# Copy application code
+COPY . .
 
-COPY config /config
+# Set execute permissions on entry script
+RUN chmod +x run.sh
 
-ADD main.py .
-
-
-RUN pip install paho-mqtt 
-RUN pip install influxdb
-RUN pip install PyCRC-Hex
-
-
-CMD ["python3" , "./main.py"]
-
-
+# Command to run when container starts
+CMD [ "/app/run.sh" ]
