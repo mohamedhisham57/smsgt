@@ -1,34 +1,15 @@
 {
-  "name": "localaddoncorrect",
-  "version": "1.0",
-  "slug": "localaddoncorrect",
-  "description": "localdatabase v2 gateway on local database home assistant",
-  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
-  "startup": "application",
-  "boot": "auto",
-  "options": {"database_port": "8086",
-    "username_database": "!secret username_database",
-    "password_database": "!secret password_database",
-    "internal_backup_database_name": "!secret internal_backup_database_name",
-    "internal_database_name": "!secret internal_database_name",
-    "database_ip": "!secret database_ip",
-    "measurement": "!secret measurement"},
-  "schema": {
-    "database_port": "str",
-    "username_database": "str",
-    "password_database": "str",
-    "internal_backup_database_name": "str",
-    "internal_database_name": "str",
-    "database_ip": "str",
-    "measurement": "str"
+  "name": "router-sms-sender",
+  "version": "1.0.0",
+  "description": "Send SMS messages through your router from Home Assistant",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
   },
-  "ports": {
-    "3000/tcp": 3000
-  },
-  "map": [
-    "ssl:rw",
-    "backup:rw"
-  ] ,
-  "host_network" : true ,
-  "hassio_api": true
+  "dependencies": {
+    "express": "^4.18.2",
+    "minimist": "^1.2.8",
+    "node-fetch": "^3.3.2"
+  }
 }
